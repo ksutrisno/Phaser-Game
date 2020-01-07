@@ -8,6 +8,24 @@ export default class PreloadScene extends Phaser.Scene {
   preload(): void {
         this.load.path = "src/Assets/";
         this.load.image("shopee" , "shopee.png");
+        this.load.spritesheet("dancer-idle", "choki-standby.png", {
+            frameWidth: 450,
+            frameHeight: 450
+          });
+          this.load.spritesheet("dancer-up", "choki-up.png", {
+            frameWidth: 450,
+            frameHeight: 450
+          });
+          this.load.spritesheet("dancer-right", "choki-right.png", {
+            frameWidth: 450,
+            frameHeight: 450
+          });
+
+          this.load.image("right" , "RightButton.png");
+
+          this.load.image("up" , "UpButton.png");
+
+          this.load.image("slot" , "EmptyButton.png");
   }
 
   create(): void {
