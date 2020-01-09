@@ -2,6 +2,8 @@ import * as Phaser from 'phaser';
 import {Move} from "../Move"
 import GameScene from '../Scene/GameScene';
 
+
+
 export default class Button extends Phaser.GameObjects.Image
 {   
     private m_move:Move;
@@ -19,13 +21,14 @@ export default class Button extends Phaser.GameObjects.Image
 
         this.setInteractive();
         this.on("pointerdown", () => this.isPressed());
-               
+        
     }
 
 
     isPressed()
     {
         this.m_scene.processMove(this.m_move);
+        this.m_scene.validateMove(this.m_move);
     }
   
 

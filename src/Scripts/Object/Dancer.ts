@@ -5,11 +5,11 @@ export default class Dancer extends Phaser.GameObjects.Sprite {
   private m_upAnim: Phaser.Animations.Animation | boolean;
   private m_idleAnim: Phaser.Animations.Animation | boolean;
   private m_rightAnim: Phaser.Animations.Animation | boolean;
-
+ 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y - 150, "dancer-idle", 0);
+    super(scene, x, y - 120, "dancer-idle", 0);
 
-    this.setScale(0.7);
+    this.setScale(0.65);
     let idleAnim = scene.anims.create({
       key: "idle",
       frames: scene.anims.generateFrameNumbers("dancer-idle", {

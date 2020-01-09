@@ -23,9 +23,16 @@ export default class PreloadScene extends Phaser.Scene {
 
           this.load.image("right" , "RightButton.png");
 
+
+          this.load.image("x" , "x.png");
+
           this.load.image("up" , "UpButton.png");
 
           this.load.image("slot" , "EmptyButton.png");
+
+          this.load.image("background" , "MainBackground.png");
+
+          this.load.image("scoreBg" , "Points.png");
   }
 
   create(): void {
