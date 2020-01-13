@@ -1,5 +1,4 @@
 import * as Phaser from 'phaser';
-import {Move} from "../Move"
 import GameScene from '../Scene/GameScene';
 
 

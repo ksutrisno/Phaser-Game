@@ -17,6 +17,12 @@ export default class GameScore extends Phaser.GameObjects.Image
         }
     }
 
+    reset()
+    {
+        this.m_score = 0;
+        this.m_text.setText(this.m_score.toString());
+    }
+
     addScore(score:number)
     {
         for(let i = 0; i < score/100; i++)

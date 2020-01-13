@@ -6,6 +6,7 @@ export default class CountDown
     private m_countDownText:string[] = ["Ready", "Set", "Go"]
     private m_text:Phaser.GameObjects.Text;
     private m_scene:Phaser.Scene;
+    private m_whistleSound:Phaser.Sound.BaseSound;
 
     constructor(scene:Phaser.Scene, x:number, y:number, countDownText:string[] = [])
     {
@@ -17,8 +18,7 @@ export default class CountDown
         }
 
         this.m_text = scene.add.text(x, y, this.m_countDownText[0], {fontSize: 68, color: "white" } ).setOrigin(0.5);
-        
-        
+        this.m_whistleSound = scene.sound.add('whistle');  
     }
 
     //** startCountDown require a function as paramater to call when the countdouwn is complete,
@@ -38,6 +38,10 @@ export default class CountDown
                 {   
                     this.m_text.setVisible(false);
                     callbackFunction();
+                }
+                else
+                {  
+                    this.m_whistleSound.play();
                 }
                 index++;
             }

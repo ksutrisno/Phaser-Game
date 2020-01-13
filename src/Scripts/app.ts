@@ -7,7 +7,8 @@ const DEFAULT_WIDTH = 720;
 const DEFAULT_HEIGHT = 1200;
 
 const config: GameConfig = {
-  title: "PhaserGame",
+  
+    title: "PhaserGame",
   scale: {
     parent: "game",
     mode: Phaser.Scale.FIT,

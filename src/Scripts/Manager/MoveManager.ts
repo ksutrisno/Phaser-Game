@@ -2,7 +2,7 @@ import * as Phaser from "phaser";
 import { Move } from "../Move";
 import GameScene from "../scene/GameScene";
 import ScorePopUp from "../Object/ScorePopUp";
-
+import {animationHelper} from "../Helper/AnimationHelper";
 
 class MoveObject extends Phaser.GameObjects.Image {
   private move: Move;
@@ -29,6 +29,7 @@ class Slot extends Phaser.GameObjects.Image
         this.dot = scene.add.circle(x, y + 75, 5, 0xff0000)
 
         this.dot.setVisible(false);
+
       }
 
       showMark(visible:boolean)
@@ -41,18 +42,29 @@ class Slot extends Phaser.GameObjects.Image
          this.setVisible(visible);
       }
 
+      destroyDot()
+      {
+          this.dot.destroy();
+      }
+
+
+
 }
 
-const k_delayBetweenMove = 700;
-const k_inputDelay = 100;
+const k_delayBetweenMove = 650;
+const k_inputDelay = 150;
+const k_maxMoveCount = 9;
+const k_minMoveCount = 4;
 
 export default class MoveManager {
   private m_scene: GameScene;
   private m_currentIndex: number = 0;
-  private m_currMoveCount: number = 5;
+  private m_currMoveCount: number = k_minMoveCount;
   private m_moves: MoveObject[] = [];
   private m_slots:Slot[] = [];
   private m_isValidating: boolean = false;
+  private m_correctSound: Phaser.Sound.BaseSound;
+  private m_wrongSound: Phaser.Sound.BaseSound;
 
   get isValidating(): boolean {
     return this.m_isValidating;
@@ -62,13 +74,33 @@ export default class MoveManager {
     return this.m_currMoveCount;
   }
 
+  set currMoveCount(count:number)
+  {
+      if(count > k_maxMoveCount)
+      {
+          count = k_maxMoveCount;
+      }
+      this.m_currMoveCount = count;
+  }
+
+
   constructor(scene: GameScene) {
     this.m_scene = scene;
 
     this.createMoveSlots();
+
+    this.m_correctSound = scene.sound.add('correct');  
+    this.m_wrongSound = scene.sound.add('wrong');  
   }
 
-  private createMoveSlots() {
+  public reset()
+  {
+      this.m_currMoveCount = k_minMoveCount;
+  }
+
+  public createMoveSlots() {
+    this.clearSlots();
+
     for (let i = 0; i < this.m_currMoveCount; i++) {
       let width = this.m_scene.cameras.main.width;
       let slot = new Slot(this.m_scene, 
@@ -113,6 +145,19 @@ export default class MoveManager {
       this.fillSlot(move, i);
     }
   }
+  
+  displayMove(index:number)
+  {
+    this.m_moves[index].setVisible(true);
+      
+    let scale = this.m_moves[index].scale;
+
+    this.m_moves[index].setScale(scale/1.5);
+
+    animationHelper.Resize(this.m_scene, this.m_moves[index], 0.1, scale)
+
+    this.m_correctSound.play();
+  }
 
   validateMove(move: Move):boolean {
 
@@ -123,7 +168,8 @@ export default class MoveManager {
 
 
     if (move === this.m_moves[this.m_currentIndex].getMove()) {
-      this.m_moves[this.m_currentIndex].setVisible(true);
+     
+      this.displayMove(this.m_currentIndex);
       this.addScore(move);
       this.m_currentIndex++;
       isValid = true;
@@ -139,6 +185,7 @@ export default class MoveManager {
         this.m_slots[this.m_currentIndex].showMark(true);
         this.m_scene.wrongMove();
         this.m_currentIndex = 0;
+        this.m_wrongSound.play();
 
         this.m_scene.time.addEvent({
             delay: 1000,
@@ -158,6 +205,14 @@ export default class MoveManager {
         this.m_isValidating = false;
         if (this.m_currentIndex === this.m_currMoveCount) {
           this.m_scene.roundComplete();
+          for (let i = 0; i < this.m_currMoveCount; i++) 
+          {
+            let scale = this.m_moves[i].scale;
+            animationHelper.Pulse(this.m_scene, this.m_moves[i], 0.4, scale * 1.10, 3);
+            animationHelper.Swing(this.m_scene, this.m_moves[i], 0.4, 30, 3)
+       
+          }
+
           this.m_currentIndex = 0;
         }
       }
@@ -188,7 +243,7 @@ export default class MoveManager {
         delay: k_delayBetweenMove * (i + 1),
 
         callback: () => {
-          this.m_moves[i].setVisible(true);
+          this.displayMove(i);
           this.m_scene.processMove(this.m_moves[i].getMove());
         }
       });
@@ -216,6 +271,15 @@ export default class MoveManager {
     }
 
     this.m_moves = [];
+  }
+
+  private clearSlots() {
+    for (let i = 0; i < this.m_slots.length; i++) {
+        this.m_slots[i].destroyDot();
+      this.m_slots[i].destroy();
+    }
+
+    this.m_slots = [];
   }
 
   private addScore(move:Move)

@@ -1,5 +1,6 @@
 
 import * as Phaser from "phaser";
+import GameScene from "../Scene/GameScene";
 
 export default class Timer
 {   
@@ -13,27 +14,26 @@ export default class Timer
 
     private m_hasStarted:boolean = false;
 
-    constructor(scene:Phaser.Scene, duration:number = 20.001)
+    private m_scene:GameScene;
+    
+    constructor(scene:GameScene, duration:number = 20.001)
     {   
         this.m_duration = duration;
         this.m_currentTime = duration;
+        this.m_scene = scene;
         this.m_text = scene.add.text(scene.cameras.main.width/2, 200,duration.toString().substr(0,5) , {fontSize: 50} ).setOrigin(0.5);
     }
     
-    playTimer(scene:Phaser.Scene)
+    playTimer(scene:GameScene, callbackFunction:()=>void)
     {
         if(this.m_timer === undefined)
         {
-            this.m_timer = scene.time.delayedCall(this.m_duration * 1000, this.timeOut, [], scene);
+            this.m_timer = scene.time.delayedCall(this.m_duration * 1000, callbackFunction, [], scene);
         }
       
         this.m_hasStarted = true;
     }
 
-    timeOut()
-    {
-        console.log("timeout");
-    }
 
     pause(pause:boolean)
     {
