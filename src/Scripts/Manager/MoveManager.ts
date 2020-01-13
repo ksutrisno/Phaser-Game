@@ -96,6 +96,7 @@ export default class MoveManager {
   public reset()
   {
       this.m_currMoveCount = k_minMoveCount;
+      this.createMoveSlots();
   }
 
   public createMoveSlots() {
