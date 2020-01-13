@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import GameScene from '../Scene/GameScene';
-
+import {Move} from '../Move'
 
 
 export default class Button extends Phaser.GameObjects.Image
