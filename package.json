@@ -4,9 +4,8 @@
   "description": "starting scene",
   "main": "app.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack --watch & live-server --port=8080",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "heroku-postbuild": "webpack -p"
   },
   "author": "kevin sutrisno",
   "license": "MIT",
@@ -17,5 +16,8 @@
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
