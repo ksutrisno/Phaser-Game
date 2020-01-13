@@ -11,6 +11,7 @@ import Timer from "../Object/Timer";
 import RoundSummary from "../Object/RoundSummary";
 import GameOver from "../Object/GameOver";
 import {animationHelper} from "../Helper/AnimationHelper";
+
 export default class GameScene extends Phaser.Scene {
   private fpsText: FpsText;
   //Manager

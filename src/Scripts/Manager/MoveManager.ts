@@ -1,6 +1,6 @@
 import * as Phaser from "phaser";
 import { Move } from "../Move";
-import GameScene from "../scene/GameScene";
+import GameScene from "../Scene/GameScene"
 import ScorePopUp from "../Object/ScorePopUp";
 import {animationHelper} from "../Helper/AnimationHelper";
 
