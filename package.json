@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch & live-server --port=8085"
+    "start": "webpack --watch & live-server --port=8085",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kevin sutrisno",
