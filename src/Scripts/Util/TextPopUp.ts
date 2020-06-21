@@ -48,7 +48,7 @@ class TextPopUpHelper {
       this.text.destroy();
     }
 
-    this.text = scene.add.text(x, y, config.text, {
+    this.text = scene.add.text(config.x, config.y, config.text, {
       color: config.color,
       fontSize: config.size.toString() + "px",
       font: config.font,

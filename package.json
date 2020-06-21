@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch & live-server --port=8085"
+    "start": "webpack & node server.js"
   },
   "author": "kevin sutrisno",
   "license": "MIT",
@@ -16,5 +16,10 @@
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsx-dom": "^6.4.17",
+    "node": "^14.4.0"
   }
 }

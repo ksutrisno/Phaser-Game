@@ -1,5 +1,5 @@
 import * as Phaser from "phaser";
-import FpsText from "../Object/FpsText";
+import FpsText from "../Component/FpsText";
 
 export default class LevelScene extends Phaser.Scene {
   private fpsText: FpsText;
